@@ -51,6 +51,14 @@ namespace AutoClicker
         {
             DoStartStop();
         }
+
+        private void ForceStop()
+        {
+            if (Started)
+            {
+                DoStartStop();
+            }
+        }
         private void DoStartStop()
         {            
             Started = !Started;
@@ -95,6 +103,11 @@ namespace AutoClicker
             var vsc = (byte)Win32.MapVirtualKeyEx(cd, Win32.MAPVK_VK_TO_VSC, IntPtr.Zero);
             Win32.keybd_event(0x20, vsc, 0, UIntPtr.Zero);
             Win32.keybd_event(0x20, vsc, 0, UIntPtr.Zero);
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            ForceStop();
         }
     }
 }
