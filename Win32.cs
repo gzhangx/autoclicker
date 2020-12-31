@@ -23,12 +23,25 @@ namespace AutoClicker
         public const int KEYEVENTF_KEYUP = 0x2;
 
 
+        [DllImport("user32.dll")]
+        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+
         //Mouse actions
         public const int MOUSEEVENTF_LEFTDOWN = 0x02;
         public const int MOUSEEVENTF_LEFTUP = 0x04;
         public const int MOUSEEVENTF_RIGHTDOWN = 0x08;
         public const int MOUSEEVENTF_RIGHTUP = 0x10;
 
+
+        [DllImport("user32.dll")]
+
+        public static extern bool PostMessage(
+            IntPtr hWnd, // handle to destination window 
+            UInt32 Msg, // message 
+            Int32 wParam, // first message parameter 
+            Int32 lParam // second message parameter 
+            );
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern IntPtr SetWindowsHookEx(int idHook,

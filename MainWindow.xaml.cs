@@ -100,6 +100,11 @@ namespace AutoClicker
 
         private void DoKey(uint cd)
         {
+            if (windowPtr != IntPtr.Zero)
+            {
+                Win32.PostMessage(windowPtr, Win32.WM_KEYDOWN,32, 0);
+                return;
+            }
             var vsc = (byte)Win32.MapVirtualKeyEx(cd, Win32.MAPVK_VK_TO_VSC, IntPtr.Zero);
             Win32.keybd_event(0x20, vsc, 0, UIntPtr.Zero);
             Win32.keybd_event(0x20, vsc, 0, UIntPtr.Zero);
@@ -108,6 +113,21 @@ namespace AutoClicker
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             ForceStop();
+        }
+
+        IntPtr windowPtr;
+
+        private void btnFindWindow_Click(object sender, RoutedEventArgs e)
+        {
+            windowPtr = Win32.FindWindow(null, txtWindowName.Text);
+            if (windowPtr != IntPtr.Zero)
+            {
+                txtWindowFound.Text = " Found window " + windowPtr.ToInt32();
+            }else
+            {
+                txtWindowFound.Text = "not found";
+
+            }
         }
     }
 }
